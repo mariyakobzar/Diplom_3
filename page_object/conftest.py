@@ -1,11 +1,10 @@
-import string
-import random
 import pytest
 import requests
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from page_object.data import Urls
+from page_object.helpers import Helpers
 
 
 @pytest.fixture(params=['chrome', 'firefox'])
@@ -23,17 +22,12 @@ def driver(request):
     driver.quit()
 
 @pytest.fixture()
-def register_new_user():
-    # метод генерирует строку, состоящую только из букв нижнего регистра, в качестве параметра передаём длину строки
-    def generate_random_string(length):
-        letters = string.ascii_lowercase
-        random_string = ''.join(random.choice(letters) for i in range(length))
-        return random_string
-
+def user_credentials():
+    # генерируем email, password, name
     def generate_payload():
-        email = generate_random_string(5)
-        password = generate_random_string(10)
-        name = generate_random_string(10)
+        email = Helpers.generate_random_string(5)
+        password = Helpers.generate_random_string(10)
+        name = Helpers.generate_random_string(10)
 
         # собираем тело запроса
         return {
@@ -44,24 +38,24 @@ def register_new_user():
     return generate_payload()
 
 @pytest.fixture()
-def return_data_pass(register_new_user):
+def return_data_pass(user_credentials):
 
-    user = register_new_user
+    user = user_credentials
 
     # отправляем запрос на регистрацию пользователя и сохраняем ответ в переменную response
-    response = requests.post('https://stellarburgers.nomoreparties.site/api/auth/register', data=user)
+    response = requests.post(f'{Urls.URL}{Urls.CREATE_USER}', data=user)
     r = response.json()
 
     # создаём список, чтобы метод мог его вернуть
     data_pass = {}
 
-    def registration(data):
-        data_pass['email'] = data['email']
-        data_pass['password'] = data['password']
-        data_pass['name'] = data['name']
-        data_pass['accessToken'] = r['accessToken']
+    #def registration(data):
+    data_pass['email'] = user['email']
+    data_pass['password'] = user['password']
+    data_pass['name'] = user['name']
+    data_pass['accessToken'] = r['accessToken']
 
-    registration(user)
+    #registration(user)
     # возвращаем список
     yield data_pass
     response = requests.delete(f'{Urls.URL}{Urls.DELETE_USER}', headers={'Authorization': data_pass['accessToken']})

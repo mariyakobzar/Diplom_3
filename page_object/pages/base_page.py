@@ -49,3 +49,5 @@ class BasePage():
         draggable = self.driver.find_element(*drag_locator)
         droppable = self.driver.find_element(*drop_locator)
         ActionChains(self.driver).drag_and_drop(draggable, droppable).perform()
+
+

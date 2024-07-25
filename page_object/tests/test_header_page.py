@@ -1,8 +1,5 @@
 import allure
 
-from page_object.locators.header_page_locators import HeaderPageLocators
-from page_object.locators.main_page_locators import MainPageLocators
-from page_object.locators.orders_page_locators import OrdersPageLocators
 from page_object.pages.header_page import HeaderPage
 from page_object.pages.main_page import MainPage
 from page_object.pages.order_page import OrdersPage
@@ -17,7 +14,7 @@ class TestHeaderPage():
         main_page.get_account_access()
         header_page.enter_constructor()
 
-        assert main_page.find_element_with_wait(MainPageLocators.TEXT_COLLECT_BURGER)
+        assert main_page.text_form_collect_burger() == 'Соберите бургер'
 
     @allure.title('Переход в ленту заказов')
     def test_enter_orders(self, driver):

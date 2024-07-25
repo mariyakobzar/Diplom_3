@@ -20,3 +20,8 @@ class EnterPage(BasePage):
         self.find_element_with_wait(EnterPageLocators.BUTTON_ENTER)
         self.click_to_element(EnterPageLocators.BUTTON_ENTER)
 
+    @allure.step("Получение текста заголовка формы логина")
+    def text_form_enter_account(self):
+        self.find_element_with_wait(EnterPageLocators.TEXT_ENTER)
+        return self.get_text_to_element(EnterPageLocators.TEXT_ENTER)
+

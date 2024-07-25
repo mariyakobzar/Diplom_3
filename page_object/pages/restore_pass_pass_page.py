@@ -11,3 +11,7 @@ class RestorePassPassPage(BasePage):
         self.find_element_with_wait(RestorePassPassLocators.BUTTON_SHOW_HIDE_PASS)
         self.click_to_element(RestorePassPassLocators.BUTTON_SHOW_HIDE_PASS)
 
+    @allure.step("Получение текста Пароль")
+    def text_input_password(self):
+        self.find_element_with_wait(RestorePassPassLocators.INPUT_PASS_ACTIVE)
+        return self.get_text_to_element(RestorePassPassLocators.INPUT_PASS_ACTIVE)

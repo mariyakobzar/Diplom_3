@@ -1,8 +1,6 @@
 import allure
 
-from page_object.locators.account_page_locators import AccountPageLocators
-from page_object.locators.enter_page_locators import EnterPageLocators
-from page_object.locators.restore_pass_pass_locators import RestorePassPassLocators
+from page_object.data import Urls
 from page_object.pages.account_page import AccountPage
 from page_object.pages.enter_page import EnterPage
 from page_object.pages.main_page import MainPage
@@ -19,7 +17,7 @@ class TestAccountPage():
         enter_page.enter_account(return_data_pass)
         main_page.get_account_access()
 
-        assert account_page.find_element_with_wait(AccountPageLocators.BUTTON_PROFILE)
+        assert account_page.text_button_profile == 'Личный Кабинет'
 
     @allure.title('Переход в историю заказов')
     def test_enter_account(self, driver, return_data_pass):
@@ -31,7 +29,7 @@ class TestAccountPage():
         main_page.get_account_access()
         account_page.move_to_order_history()
 
-        assert account_page.find_element_with_wait(AccountPageLocators.BUTTON_ORDER_HISTORY_ACTIVE)
+        assert account_page.url_button_orders_history() == Urls.URL_ORDERS_HISTORY
 
     @allure.title('Выход из аккаунта')
     def test_exit_account(self, driver, return_data_pass):
@@ -43,6 +41,6 @@ class TestAccountPage():
         main_page.get_account_access()
         account_page.exit_account()
 
-        assert enter_page.find_element_with_wait(EnterPageLocators.TEXT_ENTER)
+        assert enter_page.text_form_enter_account() == 'Вход'
 
 

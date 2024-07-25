@@ -112,11 +112,11 @@ class TestMainPage():
         enter_page = EnterPage(driver)
         main_page.get_account_access()
         enter_page.enter_account(return_data_pass)
-        driver.implicitly_wait(3)
+        main_page.find_buns()
         main_page.add_ingredient(MainPageLocators.BUN_1)
-        main_page.add_ingredient(MainPageLocators.SOUCE_2)
+        main_page.add_ingredient(MainPageLocators.SOUCE_3)
         main_page.add_ingredient(MainPageLocators.MAIN_3)
         main_page.make_order_user_login()
 
-        assert main_page.find_element_with_wait(MainPageLocators.MODAL_ORDER)
+        assert main_page.text_id_order() == 'идентификатор заказа'
 

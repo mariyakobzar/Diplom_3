@@ -45,3 +45,17 @@ class MainPage(BasePage):
     def close_modal_order(self):
         self.find_element_with_wait(MainPageLocators.CROSS_MODAL_ORDER)
         self.click_to_element(MainPageLocators.CROSS_MODAL_ORDER)
+
+    @allure.step("Получение текста формы заказа бургера")
+    def text_form_collect_burger(self):
+        self.find_element_with_wait(MainPageLocators.TEXT_COLLECT_BURGER)
+        return self.get_text_to_element(MainPageLocators.TEXT_COLLECT_BURGER)
+
+    @allure.step("Получение текста Идентификатор заказа")
+    def text_id_order(self):
+        self.find_element_with_wait(MainPageLocators.ID_ORDER)
+        return self.get_text_to_element(MainPageLocators.ID_ORDER)
+
+    @allure.step("Поиск раздела Булки")
+    def find_buns(self):
+        self.find_element_with_wait(MainPageLocators.BUNS)

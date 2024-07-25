@@ -1,6 +1,5 @@
 import allure
 
-from page_object.locators.restore_pass_pass_locators import RestorePassPassLocators
 from page_object.pages.enter_page import EnterPage
 from page_object.pages.main_page import MainPage
 from page_object.pages.restore_pass_email_page import RestorePassEmailPage
@@ -19,4 +18,4 @@ class TestRestorePassPassPage():
         restore_pass_email.input_email_for_restore_pass()
         restore_pass_pass.click_show_hide_pass_button()
 
-        assert restore_pass_pass.find_element_with_wait(RestorePassPassLocators.INPUT_PASS_ACTIVE)
+        assert restore_pass_pass.text_input_password() == 'Пароль'
